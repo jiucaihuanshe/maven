@@ -16,4 +16,10 @@ public class UserServiceImpl implements UserService01{
 		System.out.println("update:"+user);
 	}
 
+	@Override
+	public Object findUserById(Integer id) {
+		System.out.println("findUserById:"+id);
+		return "–‹√®";
+	}
+
 }

@@ -42,4 +42,6 @@ public class TxManagerAspect {
  * 	@After
  * }
  * 先执行Exception在执行finally
+ * 先执行@After在执行@AfterReturn
+ * 先执行@After在执行@AfterThrowing
  */

@@ -29,6 +29,13 @@ public class TestUserService {
 		UserService01 userService01 = ctx.getBean("userServiceImpl",UserService01.class);
 		userService01.updateUser("ЪѓБъ");
 	}
+
+	@Test
+	public void testfindUserById(){
+		UserService01 userService01 = ctx.getBean("userServiceImpl",UserService01.class);
+		userService01.findUserById(24);
+	}
+
 	@After
 	public void destroy(){
 		ctx.close();
