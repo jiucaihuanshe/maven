@@ -10,10 +10,12 @@ public class UserServiceImpl implements UserService01{
 		System.out.println("save:"+user);
 		throw new RuntimeException("save.exception");
 	}
-
+	
 	@Override
-	public void updateUser(String user) {
+	@Permission
+	public int updateUser(String user) {
 		System.out.println("update:"+user);
+		return 0;
 	}
 
 	@Override
