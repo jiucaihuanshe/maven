@@ -12,4 +12,8 @@
 	<select id="findUserById" resultType="map" parameterType="int">
 		select * from sys_users where id=#{id}
 	</select>
+	<insert id="insertObject" parameterType="sysUser">
+		insert into sys_users(id,username,password,phone,createdDate,modifiedDate)
+		values(null,#{username},#{password},#{phone},now(),now())
+	</insert>
 </mapper>

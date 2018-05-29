@@ -12,6 +12,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import practice.com.project.mybatis.dao.SysUser;
+import practice.com.project.mybatis.dao.SysUserDao;
+
 public class TestSysUser01 {
 	/**
 	 * 每个基于 MyBatis 的应用都是以一个 SqlSessionFactory 的实例为中心的。
@@ -50,6 +53,20 @@ public class TestSysUser01 {
 		SqlSession session = factory.openSession();
 		Map<String, Object> map = session.selectOne("practice.com.project.mybatis.dao.SysUserDao.findUserById", 1);
 		System.out.println(map);
+		session.close();
+	}
+	@Test
+	public void testinsertObject(){
+		//false表示事务需要手动提交
+		SqlSession session = factory.openSession(false);
+		SysUserDao dao = session.getMapper(SysUserDao.class);
+		SysUser entity = new SysUser();
+		entity.setUsername("tedu");
+		entity.setPassword("123");
+		entity.setPhone("1234565");
+		int rows = dao.insertObject(entity);
+		session.commit();//提交事务
+		System.out.println("rows="+rows);
 		session.close();
 	}
 }
