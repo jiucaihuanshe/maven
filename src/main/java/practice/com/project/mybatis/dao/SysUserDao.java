@@ -7,4 +7,5 @@ public interface SysUserDao {
 	List<Map<String, Object>> findUsers();
 	Map<String, Object> findUserById(Integer id);
 	int insertObject(SysUser entity);
+	int updateObject(SysUser entity);
 }

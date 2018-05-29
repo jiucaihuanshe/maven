@@ -16,4 +16,8 @@
 		insert into sys_users(id,username,password,phone,createdDate,modifiedDate)
 		values(null,#{username},#{password},#{phone},now(),now())
 	</insert>
+	<update id="updateObject" parameterType="sysUser">
+		update sys_users set username=#{username},password=#{password},phone=#{phone},
+		createdDate=now(),modifiedDate=now() where id=#{id}
+	</update>
 </mapper>
