@@ -7,7 +7,7 @@ public class SysUser {
 	private String username;
 	private String password;
 	private String phone;
-	private Date createDate;
+	private Date createdDate;
 	private Date modifiedDate;
 	public Integer getId() {
 		return id;
@@ -33,11 +33,11 @@ public class SysUser {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public Date getCreateDate() {
-		return createDate;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 	public Date getModifiedDate() {
 		return modifiedDate;
@@ -48,7 +48,7 @@ public class SysUser {
 	@Override
 	public String toString() {
 		return "SysUser [id=" + id + ", username=" + username + ", password=" + password + ", phone=" + phone
-				+ ", createDate=" + createDate + ", modifiedDate=" + modifiedDate + "]";
+				+ ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + "]";
 	}
 	
 }
