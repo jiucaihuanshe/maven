@@ -20,4 +20,28 @@
 		update sys_users set username=#{username},password=#{password},phone=#{phone},
 		createdDate=now(),modifiedDate=now() where id=#{id}
 	</update>
+	<delete id="deleteObject" parameterType="int">
+		delete from sys_users where id=#{id}
+	</delete>
+	<!-- 当查询的结果与要映射的对象字段不匹配时，可以使用ResultMap做映射转换 -->
+	<!-- 使用resultMap定义映射关系 -->
+	<resultMap type="account" id="amap">
+		<result property="uname" column="username"/>
+		<result property="pwd" column="password"/>
+	</resultMap>
+	<!-- 定义一个SQL查询 -->
+	<!-- 当数据库返回的字段名与要映射对象属性和set方法不匹配，需要使用resultMap做具体映射 -->
+	<select id="findNameAndPwd" resultMap="amap">
+		select username,password from sys_users
+	</select>
+	<!-- useGeneratedKeys="true"使用的前提是数据库必须要支持自增长 -->
+	<insert id="insertObject1" parameterType="sysUser"
+		useGeneratedKeys="true" keyProperty="id">
+       insert into sys_users(id,username,password,phone,createdDate,modifiedDate)
+       values(null,#{username},#{password},#{phone},now(),now())
+	</insert>
+	
+	<select id="findUsers1" resultType="map">
+		select * from sys_users where phone=#{phone} order by ${columnName} desc
+	</select>
 </mapper>
