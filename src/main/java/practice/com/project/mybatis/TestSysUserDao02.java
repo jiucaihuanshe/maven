@@ -34,9 +34,9 @@ public class TestSysUserDao02 {
 		SqlSession session = factory.openSession(false);
 		SysUserDao dao =session.getMapper(SysUserDao.class);
 		SysUser entity = new SysUser();
-		entity.setUsername("hong");
-		entity.setPassword("123");
-		entity.setPhone("13934");
+		entity.setUsername("da");
+		entity.setPassword("139");
+		entity.setPhone("139354");
 		int rows = dao.insertObject(entity);
 		session.commit();
 		System.out.println("rows="+rows);
@@ -101,11 +101,44 @@ public class TestSysUserDao02 {
 		session.close();
 	}
 	//测试${} 传入值
+	/**
+	 * 默认情况下mybatis只开启一级缓存（一般称之为sqlsession级别）
+	 */
 	@Test
 	public void testfindUsers1(){
 		SqlSession session = factory.openSession();
 		SysUserDao dao = session.getMapper(SysUserDao.class);
 		List<Map<String, Object>> list=dao.findUsers1("id","139");
+		//session.clearCache();//清除缓存
+		List<Map<String, Object>> list1=dao.findUsers1("id","139");
+		System.out.println(list);
+		System.out.println(list1);
+		session.close();
+	}
+	/**
+	 * 需要使用二级缓存(SqlSessionFactory级别)则需要:
+	 * 第一步:在核心配置文件中配置(默认是否是开启的要看具体版本)
+	 * 第二步:在mybatis映射文件中添加cache标签。
+	 */
+	@Test
+	public void testfindUsers2(){
+		SqlSession session = factory.openSession();
+		SysUserDao dao = session.getMapper(SysUserDao.class);
+		List<Map<String, Object>> list=dao.findUsers1("id","139");
+		System.out.println(list);
+		session.close();
+		session = factory.openSession();
+		dao = session.getMapper(SysUserDao.class);
+		list=dao.findUsers1("id","139");
+		System.out.println(list);
+		session.close();
+	}
+	
+	@Test
+	public void findUsersByPhone(){
+		SqlSession session = factory.openSession();
+		SysUserDao dao = session.getMapper(SysUserDao.class);
+		List<SysUser> list=dao.findUsersByPhone("139");//sql注入：139' or phone like '123
 		System.out.println(list);
 		session.close();
 	}

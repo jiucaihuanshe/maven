@@ -1,8 +1,16 @@
 package practice.com.project.mybatis.dao;
 
+import java.io.Serializable;
 import java.util.Date;
-
-public class SysUser {
+/**
+ * 实体对象：封装数据，实现与表中数据的映射
+ * 1.何为序列化和反序列化？
+ * 2.序列化对象版本id有什么作用？
+ * 3.对象序列化过程是否可以对内容进行加密？
+ * 4.如何对对象序列化进行细密度控制？transient
+ */
+public class SysUser implements Serializable{
+	private static final long serialVersionUID = 2332312567578114619L;
 	private Integer id;
 	private String username;
 	private String password;

@@ -4,6 +4,7 @@
 <!-- mybatis中的映射文件，对于这个映射文件必须有一个mapper根元素，这个根元素
 中必须定义一个命名空间 -->
 <mapper namespace="practice.com.project.mybatis.dao.SysUserDao">
+	<cache eviction="LRU" flushInterval="60000" size="512" readOnly="true"/>
 	<!-- 定义一个SQL查询，必须要有一个id，其中resultType表示查询
 	结果会封装到对应的map类型中，一行记录对应一个map -->
 	<select id="findUsers" resultType="map">
@@ -44,4 +45,37 @@
 	<select id="findUsers1" resultType="map">
 		select * from sys_users where phone=#{phone} order by ${columnName} desc
 	</select>
+	
+	<!-- $ 可能导致SQL注入问题 比如：139' or phone like '123
+		concat("%",#{phone},"%") 可以解决SQL注入	-->
+	<select id="findUsersByPhone" resultType="sysUser">
+		<!-- select * from sys_users where phone like '%${phone}%' order by id desc -->
+		select * from sys_users where phone like concat("%",#{phone},"%") order by id desc
+	</select>
+	
+	<!-- 动态sql应用
+	if语句通常用于进行相关条件判断，返回true则执行，false则不执行。
+	where元素用于定义查询条件，并且可以去除空格或者还是and，or等不符合语法要求的字符。
+	foreach用于迭代mybatis找那个的多个参数数据。
+	 -->
+	<select id="findUsersByIf" resultType="sysUser">
+		select * from sys_users
+		<where>
+			<if test="id!=null and id=''">
+				id>#{id}
+			</if>
+		</where>
+		<if test="phone!=null and phone!=''">
+			and phone like concat("%",#{phone},"%")
+		</if>
+		<if test="username!=null and username!=''">
+			and username like concat("%",#{username},"%")
+		</if>
+	</select>
+	<delete id="deleteForeach">
+		delete from sys_users where id in
+		<foreach collection="ids" open="(" close=")" separator="," item="item">
+			#{item}
+		</foreach>
+	</delete>
 </mapper>
